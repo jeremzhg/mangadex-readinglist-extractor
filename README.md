@@ -21,7 +21,15 @@ pip install dotenv
 ``` bash
 copy .env.example .env
 ```
-
+- To get your client profile credentials, 
+  1. Login to your account on mangadex
+  2. Click profile, and head to settings  
+  ![](docs/1.png)
+  3. Head to the API Client menu, and create a new client profile
+  ![](docs/2.png)
+  4. Click the newly created profile, get your client id (client-profile-somethingsomething) and client secret
+  ![](docs/3.png)
+  
 4. Run the script
 ``` bash
 python sync.py
