@@ -9,7 +9,7 @@ This script extracts your reading list from mangadex and saves it to a text file
 
 1. Clone the repository
 ``` bash
-git clone https://github.com/yourusername/mangadex-readinglist-extractor.git
+git clone https://github.com/jeremzhg/mangadex-readinglist-extractor.git
 ```
 
 2. Install the dependencies
