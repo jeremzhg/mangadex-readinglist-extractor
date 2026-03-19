@@ -27,7 +27,7 @@ copy .env.example .env
   ![](docs/1.png)
   3. Head to the API Client menu, and create a new client profile
   ![](docs/2.png)
-  4. Click the newly created profile, get your client id (client-profile-somethingsomething) and client secret
+  4. Click the newly created profile, get your client id (personal-client-somethingsomething) and client secret
   ![](docs/3.png)
   
 4. Run the script
