@@ -9,7 +9,7 @@ This script extracts your reading list from mangadex and saves it to a text file
 
 1. Clone the repository
 ``` bash
-git clone https://github.com/yourusername/mangadex-readinglist-extractor.git
+git clone https://github.com/jeremzhg/mangadex-readinglist-extractor.git
 ```
 
 2. Install the dependencies
@@ -27,7 +27,7 @@ copy .env.example .env
   ![](docs/1.png)
   3. Head to the API Client menu, and create a new client profile
   ![](docs/2.png)
-  4. Click the newly created profile, get your client id (client-profile-somethingsomething) and client secret
+  4. Click the newly created profile, get your client id (personal-client-somethingsomething) and client secret
   ![](docs/3.png)
   
 4. Run the script
