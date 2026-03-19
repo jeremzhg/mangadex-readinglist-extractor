@@ -18,7 +18,7 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 ## can change the value to whatever you want, its the output text file
 files_map = {
-    "plan_to_read": "plan_to_reading.txt",
+    "plan_to_read": "plan_to_read.txt",
     "completed": "completed.txt",
     "re_reading": "re_reading.txt",
     "reading": "reading.txt",
@@ -119,6 +119,7 @@ def update_file(filename, fetched_titles):
                     normalized_existing.add(normalize_title(title))
                     
     added_count = 0
+    added_titles = []
     with open(filename, "a", encoding="utf-8") as f:
         for title in fetched_titles:
             norm_title = normalize_title(title)
@@ -126,8 +127,9 @@ def update_file(filename, fetched_titles):
                 f.write(title + "\n")
                 normalized_existing.add(norm_title)
                 added_count += 1
+                added_titles.append(title)
                 
-    return added_count
+    return added_count, added_titles
 
 def main():
     try:
@@ -150,9 +152,13 @@ def main():
         print(f"\nprocessing '{status}' ({len(ids)} manga)...")
         
         titles = fetch_manga_titles(ids)
-        added = update_file(filename, titles)
-        print(f"-> added {added} new titles to {filename}")
+        added_count, added_titles = update_file(filename, titles)
+        print(f"-> added {added_count} new titles to {filename}")
         
+        if added_titles:
+            print("\nAdded titles:")
+            for title in added_titles:
+                print(f"- {title}")
     print("\nsuccess")
 
 if __name__ == "__main__":
