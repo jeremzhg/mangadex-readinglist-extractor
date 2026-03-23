@@ -108,6 +108,32 @@ def fetch_manga_titles(ids):
             time.sleep(0.5)
     return titles
 
+def find_and_remove_from_other_files(title, current_status):
+    old_statuses = []
+    norm_title = normalize_title(title)
+    for st, fname in files_map.items():
+        if st == current_status:
+            continue
+        if not os.path.exists(fname):
+            continue
+            
+        lines = []
+        found = False
+        with open(fname, "r", encoding="utf-8") as f:
+            for line in f:
+                if normalize_title(line.strip()) == norm_title:
+                    found = True
+                else:
+                    lines.append(line)
+                    
+        if found:
+            with open(fname, "w", encoding="utf-8") as f:
+                for line in lines:
+                    f.write(line)
+            old_statuses.append(st)
+            
+    return old_statuses
+
 def update_file(filename, fetched_titles):
     normalized_existing = set()
     
@@ -160,12 +186,23 @@ def main():
         added_count, added_titles = update_file(filename, titles)
         print(f"-> added {added_count} new titles to {filename}")
         
-        if added_titles:
-            print("\nAdded titles:")
+        migrated_or_added = []
+        for title in titles:
+            old_statuses = find_and_remove_from_other_files(title, status)
+            if old_statuses:
+                old_str = ", ".join(old_statuses)
+                msg = f"[{old_str} -> {status}] {title}"
+                migrated_or_added.append(msg)
+            elif title in added_titles:
+                msg = f"[{status}] {title}"
+                migrated_or_added.append(msg)
+                
+        if migrated_or_added:
+            print("\nAdded / Migrated titles:")
             with open(history_filename, "a", encoding="utf-8") as hf:
-                for title in added_titles:
-                    print(f"- {title}")
-                    hf.write(f"[{status}] {title}\n")
+                for msg in migrated_or_added:
+                    print(f"- {msg}")
+                    hf.write(msg + "\n")
     print("\nsuccess")
 
 if __name__ == "__main__":
