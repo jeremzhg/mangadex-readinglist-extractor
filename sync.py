@@ -147,6 +147,11 @@ def main():
             status_groups[status] = []
         status_groups[status].append(manga_id)
         
+    today_str = time.strftime("%Y-%m-%d")
+    history_dir = "history"
+    os.makedirs(history_dir, exist_ok=True)
+    history_filename = os.path.join(history_dir, f"history_{today_str}.txt")
+
     for status, ids in status_groups.items():
         filename = files_map.get(status, f"{status}.txt")
         print(f"\nprocessing '{status}' ({len(ids)} manga)...")
@@ -157,8 +162,10 @@ def main():
         
         if added_titles:
             print("\nAdded titles:")
-            for title in added_titles:
-                print(f"- {title}")
+            with open(history_filename, "a", encoding="utf-8") as hf:
+                for title in added_titles:
+                    print(f"- {title}")
+                    hf.write(f"[{status}] {title}\n")
     print("\nsuccess")
 
 if __name__ == "__main__":
